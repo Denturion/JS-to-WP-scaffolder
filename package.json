@@ -1,0 +1,27 @@
+{
+  "name": "js-to-wp-scaffolder",
+  "version": "1.0.0",
+  "description": "Scaffold modern OOP WordPress plugins from a JSON config — bridging JS/Node conventions to PHP/WordPress patterns",
+  "main": "src/index.js",
+  "bin": {
+    "wp-scaffold": "./bin/scaffold.js"
+  },
+  "scripts": {
+    "start": "node bin/scaffold.js",
+    "test": "jest --testPathPattern=tests/"
+  },
+  "keywords": ["wordpress", "plugin", "scaffold", "generator", "oop", "php"],
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.2.0",
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

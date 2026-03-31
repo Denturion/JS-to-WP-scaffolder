@@ -1,0 +1,46 @@
+{
+  "plugin": {
+    "name": "My Awesome Plugin",
+    "slug": "my-awesome-plugin",
+    "namespace": "MyAwesomePlugin",
+    "description": "A modern OOP WordPress plugin scaffolded with js-to-wp-scaffolder.",
+    "version": "1.0.0",
+    "author": "Your Name",
+    "authorUri": "https://yoursite.com",
+    "pluginUri": "https://yoursite.com/my-awesome-plugin",
+    "textDomain": "my-awesome-plugin",
+    "minWpVersion": "6.0",
+    "minPhpVersion": "8.0"
+  },
+  "features": {
+    "settingsPage": true,
+    "restApi": true,
+    "adminMenu": true
+  },
+  "settings": [
+    {
+      "key": "api_key",
+      "label": "API Key",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "api_url",
+      "label": "API Base URL",
+      "type": "url",
+      "default": "https://api.example.com"
+    },
+    {
+      "key": "enable_logging",
+      "label": "Enable Debug Logging",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "cache_ttl",
+      "label": "Cache TTL (seconds)",
+      "type": "number",
+      "default": 3600
+    }
+  ]
+}

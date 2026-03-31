@@ -1,0 +1,29 @@
+{
+    "name": "{{plugin.author_slug}}/{{plugin.slug}}",
+    "description": "{{plugin.description}}",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">={{plugin.minPhpVersion}}"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "{{plugin.namespace}}\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "{{plugin.namespace}}\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}

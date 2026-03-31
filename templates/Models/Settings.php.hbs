@@ -1,0 +1,177 @@
+<?php
+/**
+ * Settings Model
+ *
+ * @package {{plugin.namespace}}\Models
+ */
+
+namespace {{plugin.namespace}}\Models;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Class Settings
+ *
+ * Data layer for plugin settings using the WordPress Options API.
+ *
+ * JS/Node mapping:
+ *   get_option('key')           -> localStorage.getItem('key') (persistent across sessions)
+ *   update_option('key', val)   -> localStorage.setItem('key', val)
+ *   delete_option('key')        -> localStorage.removeItem('key')
+ *   set_transient('key', v, ttl)-> sessionStorage.setItem('key', v) with a setTimeout cleanup
+ *   get_transient('key')        -> sessionStorage.getItem('key') (returns false if expired)
+ *
+ * Why group all settings under one option key?
+ *   The same reason you store a config object in localStorage rather than
+ *   individual keys — fewer DB reads. One get_option() call fetches everything.
+ */
+class Settings {
+
+	/**
+	 * The wp_options key that stores all plugin settings.
+	 * All settings are serialized under this single key to reduce DB queries.
+	 *
+	 * @var string
+	 */
+	private string $option_key = '{{plugin.slug}}_settings';
+
+	/**
+	 * In-memory cache of the current settings array.
+	 * Analogous to a module-level variable holding the loaded config.
+	 *
+	 * @var array|null
+	 */
+	private ?array $cache = null;
+
+	/**
+	 * Default values, used when a setting has not been saved yet.
+	 * Analogous to: const defaults = { apiKey: '', debug: false }
+	 *
+	 * @var array<string, mixed>
+	 */
+	private array $defaults = [
+		{{#each settings}}
+		'{{key}}' => {{defaultValue}},
+		{{/each}}
+	];
+
+	/**
+	 * Get all settings, merged with defaults.
+	 *
+	 * Analogous to:
+	 *   const settings = { ...defaults, ...JSON.parse(localStorage.getItem('settings') ?? '{}') }
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function get_all(): array {
+		if ( null === $this->cache ) {
+			$stored      = get_option( $this->option_key, [] );
+			$this->cache = wp_parse_args( is_array( $stored ) ? $stored : [], $this->defaults );
+		}
+
+		return $this->cache;
+	}
+
+	/**
+	 * Get a single setting value.
+	 *
+	 * Analogous to: settings.apiKey ?? defaultValue
+	 *
+	 * @param string     $key     Setting key.
+	 * @param mixed|null $default Override fallback (uses defined default if null).
+	 * @return mixed
+	 */
+	public function get( string $key, mixed $default = null ): mixed {
+		$settings = $this->get_all();
+
+		return $settings[ $key ] ?? $default ?? ( $this->defaults[ $key ] ?? null );
+	}
+
+	/**
+	 * Save a single setting.
+	 *
+	 * Analogous to: localStorage.setItem('apiKey', value)
+	 *
+	 * @param string $key   Setting key.
+	 * @param mixed  $value New value.
+	 * @return bool True if the value was changed and saved, false otherwise.
+	 */
+	public function set( string $key, mixed $value ): bool {
+		$settings         = $this->get_all();
+		$settings[ $key ] = $value;
+		$this->cache      = $settings;
+
+		return update_option( $this->option_key, $settings );
+	}
+
+	/**
+	 * Save multiple settings at once.
+	 *
+	 * Analogous to: Object.assign(currentSettings, updates)
+	 *
+	 * @param array<string, mixed> $values Key-value pairs to update.
+	 * @return bool
+	 */
+	public function set_many( array $values ): bool {
+		$settings    = $this->get_all();
+		$settings    = array_merge( $settings, $values );
+		$this->cache = $settings;
+
+		return update_option( $this->option_key, $settings );
+	}
+
+	/**
+	 * Delete all settings and reset to defaults.
+	 *
+	 * Analogous to: localStorage.removeItem('settings')
+	 *
+	 * @return bool
+	 */
+	public function reset(): bool {
+		$this->cache = null;
+		return delete_option( $this->option_key );
+	}
+
+	// --- Transient cache helpers (analogous to short-lived sessionStorage) ---
+
+	/**
+	 * Store a value in the transient cache with a TTL.
+	 *
+	 * Analogous to:
+	 *   cache.set(key, value);
+	 *   setTimeout(() => cache.delete(key), ttl * 1000);
+	 *
+	 * @param string $key        Cache key (namespaced automatically).
+	 * @param mixed  $value      Value to store.
+	 * @param int    $expiration TTL in seconds (default: 1 hour).
+	 * @return bool
+	 */
+	public function cache_set( string $key, mixed $value, int $expiration = 3600 ): bool {
+		return set_transient( '{{plugin.slug}}_' . $key, $value, $expiration );
+	}
+
+	/**
+	 * Retrieve a value from the transient cache.
+	 *
+	 * Analogous to: cache.get(key) — returns false (not null) when expired/missing,
+	 * so always check with strict `=== false`.
+	 *
+	 * @param string $key Cache key.
+	 * @return mixed|false The cached value, or false if expired or not set.
+	 */
+	public function cache_get( string $key ): mixed {
+		return get_transient( '{{plugin.slug}}_' . $key );
+	}
+
+	/**
+	 * Delete a transient cache entry.
+	 *
+	 * @param string $key Cache key.
+	 * @return bool
+	 */
+	public function cache_delete( string $key ): bool {
+		return delete_transient( '{{plugin.slug}}_' . $key );
+	}
+}

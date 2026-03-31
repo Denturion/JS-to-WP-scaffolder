@@ -1,0 +1,23 @@
+/**
+ * {{plugin.name}} Admin Styles
+ *
+ * Scoped under .{{plugin.slug}}-admin-wrap to avoid conflicts with WP core styles.
+ * @wordpress/components provides its own styles via wp_enqueue_style in AdminInit.php.
+ */
+
+.{{plugin.slug}}-admin-wrap {
+	max-width: 720px;
+	margin: 24px 0;
+}
+
+.{{plugin.slug}}-admin-wrap h1 {
+	margin-bottom: 16px;
+}
+
+.{{plugin.slug}}-admin-wrap .components-card {
+	margin-top: 16px;
+}
+
+.{{plugin.slug}}-admin-wrap .components-button.is-primary {
+	margin-top: 8px;
+}
