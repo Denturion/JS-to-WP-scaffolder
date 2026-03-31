@@ -17,43 +17,40 @@ const CONCEPT_MAP = [
 
 const KITS = [
   {
+    icon: '📝',
+    title: 'Blog Plugin Kit',
+    slug: 'blog-plugin',
+    tagline: 'A complete blogging plugin with Custom Post Types, REST endpoints, and a React admin panel — all from one config.json.',
+    features: [
+      'Custom Post Type registration via config',
+      'REST endpoints for fetching and filtering posts',
+      'React admin dashboard for content management',
+      'PSR-4 namespaced, Composer-ready out of the box',
+    ],
+  },
+  {
     icon: '🔌',
-    title: 'The API Bridge',
+    title: 'API Integration Kit',
     slug: 'api-bridge',
-    tagline: 'Securely connect WP to any external API. Zero key exposure.',
+    tagline: 'Securely connect WordPress to any external API. Credentials stay server-side, always.',
     features: [
       'SecureApiClient auto-injects stored API key',
-      'Proxy REST endpoint keeps credentials server-side',
+      'Proxy REST endpoint — your key never hits the browser',
       'Optional transient caching per request',
       'React settings page — key, base URL, timeout',
     ],
-    tag: 'Popular',
   },
   {
-    icon: '⚛️',
-    title: 'The React Admin',
-    slug: 'react-admin-dashboard',
-    tagline: 'A full-screen React dashboard inside WP Admin. Looks nothing like WordPress.',
+    icon: '🛒',
+    title: 'WooCommerce Addon Kit',
+    slug: 'woocommerce-addon',
+    tagline: 'Extend WooCommerce without writing PHP from scratch. Custom product meta, hooks, and a React settings panel.',
     features: [
-      'Sidebar navigation + panel layout',
-      'Tailwind CSS scoped to the plugin wrapper',
-      '@wordpress/scripts build pipeline pre-configured',
-      'Stat cards, toast notifications, component layer',
+      'Custom product meta fields via OOP class',
+      'WooCommerce hook handlers pre-wired',
+      'REST endpoint for extended product data',
+      'React settings panel for addon configuration',
     ],
-    tag: null,
-  },
-  {
-    icon: '🚀',
-    title: 'The Headless Optimizer',
-    slug: 'headless-optimizer',
-    tagline: 'Strip WP bloat. Add CORS. Ship a clean API for Next.js.',
-    features: [
-      'Removes emojis, feeds, XML-RPC, oEmbed (~40 KB+)',
-      'CORS headers with configurable allowed origins',
-      'Cache-Control on REST GET responses',
-      'BFF endpoints: /posts, /posts/:slug, /menu/:location',
-    ],
-    tag: null,
   },
 ];
 
@@ -100,7 +97,7 @@ const FAQS = [
   },
   {
     q: "Do I need to know PHP to use this?",
-    a: "For the API Bridge and React Admin kits: barely. The PHP is just wiring — configure it with JSON, and the React app is pure JSX you'll feel at home in. For the Headless Optimizer: you'll want basic PHP comfort to add your own REST endpoints, but the pattern is identical to Express — register a route, write a callback, return data.",
+    a: "For the API Integration and React Admin templates: barely. The PHP is just wiring — configure it with JSON, and the React app is pure JSX you'll feel at home in. For the Headless Optimizer config: you'll want basic PHP comfort to add your own REST endpoints, but the pattern is identical to Express — register a route, write a callback, return data.",
   },
   {
     q: "What's different from other WP plugin boilerplates?",
@@ -108,7 +105,7 @@ const FAQS = [
   },
   {
     q: "Is the generated code production-ready?",
-    a: "Yes. PSR-4 autoloading, Singleton bootstrap, REST API routes with permission callbacks, sanitized input, escaped output. The same structural patterns used in mature plugins like WooCommerce and Yoast SEO. The React settings page uses @wordpress/components and @wordpress/api-fetch, which handle nonce auth automatically.",
+    a: "Yes. PSR-4 autoloading, Singleton bootstrap, REST API routes with permission callbacks, sanitized input, escaped output. The same structural patterns used in mature plugins like WooCommerce and Yoast SEO. The React settings page uses @wordpress/components and @wordpress/api-fetch, which handle nonce auth automatically. It's free and open source — fork it, adapt it, make it your own.",
   },
   {
     q: "Why the Singleton pattern?",
@@ -144,10 +141,12 @@ function Nav() {
             GitHub
           </a>
           <a
-            href="#kits"
+            href="https://github.com/Denturion/JS-to-WP-scaffolder"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-3.5 py-1.5 bg-green-400 text-zinc-950 rounded-md text-sm font-semibold hover:bg-green-300 transition-colors"
           >
-            Get the Kits
+            Get the kits
           </a>
         </nav>
       </div>
@@ -328,16 +327,14 @@ function ConceptMap() {
   );
 }
 
-function KitCard({ icon, title, tagline, features, tag }) {
+function KitCard({ icon, title, tagline, features }) {
   return (
     <div className="kit-card rounded-xl bg-zinc-900 border border-zinc-800 p-6">
       <div className="flex items-start justify-between mb-4">
         <span className="text-4xl">{icon}</span>
-        {tag && (
-          <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-950 text-green-400 border border-green-900/60">
-            {tag}
-          </span>
-        )}
+        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-zinc-800 text-zinc-400 border border-zinc-700">
+          free
+        </span>
       </div>
       <h3 className="text-lg font-bold text-white mb-1.5">{title}</h3>
       <p className="text-sm text-zinc-400 mb-5 leading-relaxed">{tagline}</p>
@@ -358,14 +355,15 @@ function Kits() {
     <section id="kits" className="py-20 px-6 border-t border-zinc-800/50">
       <div className="mx-auto max-w-5xl">
         <p className="text-center text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-3">
-          Starter kits
+          Starter templates
         </p>
         <h2 className="text-center text-3xl font-bold text-white mb-3">
-          Three templates, ready to ship.
+          Free configs for common use cases.
         </h2>
         <p className="text-center text-zinc-400 text-sm mb-12 max-w-lg mx-auto">
-          Generated by the scaffolder, then extended with kit-specific PHP classes
-          and React components. Activate, customise, ship.
+          Drop one of these <code className="text-zinc-300 bg-zinc-800 px-1.5 py-0.5 rounded text-xs">config.json</code> files
+          into the scaffolder and get a full plugin structure in seconds.
+          All on GitHub, no strings attached.
         </p>
 
         <div className="grid sm:grid-cols-3 gap-5 mb-10">
@@ -375,14 +373,27 @@ function Kits() {
         </div>
 
         <div className="text-center">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-green-400 text-zinc-950 rounded-lg text-sm font-semibold hover:bg-green-300 transition-colors"
-          >
-            Get all three kits →
-          </a>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <a
+              href="https://github.com/Denturion/JS-to-WP-scaffolder"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-green-400 text-zinc-950 rounded-lg text-sm font-semibold hover:bg-green-300 transition-colors"
+            >
+              Get the kits →
+            </a>
+            <a
+              href="https://buymeacoffee.com/your-username"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors"
+              style={{ backgroundColor: '#FFDD00', color: '#1a1a1a' }}
+            >
+              ☕ Buy me a coffee
+            </a>
+          </div>
           <p className="mt-3 text-xs text-zinc-600">
-            Includes source code, composer.json, React build setup, and a 5-minute README.
+            Free and open source. If it saves you time, a coffee is always appreciated.
           </p>
         </div>
       </div>
@@ -485,24 +496,27 @@ function Cta() {
           Stop writing PHP you don&apos;t understand.
         </h2>
         <p className="text-zinc-400 text-base mb-9 leading-relaxed">
-          Three starter kits. One config file. WordPress plugins that feel like
+          Open source. One config file. WordPress plugins that feel like
           the Node code you write every day.
         </p>
 
         <div className="flex flex-wrap gap-3 justify-center">
           <a
-            href="#"
-            className="px-6 py-3 bg-green-400 text-zinc-950 rounded-lg font-semibold text-sm hover:bg-green-300 transition-colors"
-          >
-            Get the Starter Kits →
-          </a>
-          <a
             href="https://github.com/Denturion/JS-to-WP-scaffolder"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-zinc-900 text-zinc-100 border border-zinc-700 rounded-lg font-semibold text-sm hover:bg-zinc-800 transition-colors"
+            className="px-6 py-3 bg-green-400 text-zinc-950 rounded-lg font-semibold text-sm hover:bg-green-300 transition-colors"
           >
-            Star on GitHub
+            Get the kits on GitHub →
+          </a>
+          <a
+            href="https://buymeacoffee.com/your-username"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 rounded-lg font-semibold text-sm transition-opacity hover:opacity-90"
+            style={{ backgroundColor: '#FFDD00', color: '#1a1a1a' }}
+          >
+            ☕ Buy me a coffee
           </a>
         </div>
       </div>
