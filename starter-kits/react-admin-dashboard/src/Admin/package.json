@@ -1,0 +1,22 @@
+{
+  "name": "react-admin-dashboard-admin",
+  "version": "1.0.0",
+  "description": "React admin UI for the The React Admin WordPress plugin",
+  "private": true,
+  "scripts": {
+    "build": "wp-scripts build src/index.js --output-path=build",
+    "start": "wp-scripts start src/index.js --output-path=build",
+    "lint:js": "wp-scripts lint-js src/",
+    "lint:css": "wp-scripts lint-style src/"
+  },
+  "dependencies": {
+    "@wordpress/api-fetch": "^6.0.0",
+    "@wordpress/components": "^25.0.0",
+    "@wordpress/element": "^5.0.0"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.0"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "plugin": {
+    "name": "The Headless Optimizer",
+    "slug": "headless-optimizer",
+    "namespace": "HeadlessOptimizer",
+    "description": "Strips WP bloat, adds CORS headers, and exposes clean REST endpoints for Next.js or Nuxt frontends.",
+    "version": "1.0.0",
+    "author": "Your Name",
+    "authorUri": "https://yoursite.com",
+    "pluginUri": "https://yoursite.com/headless-optimizer",
+    "textDomain": "headless-optimizer",
+    "minWpVersion": "6.0",
+    "minPhpVersion": "8.0"
+  },
+  "features": {
+    "settingsPage": true,
+    "restApi": true,
+    "adminMenu": true
+  },
+  "settings": [
+    {
+      "key": "allowed_origins",
+      "label": "Allowed CORS Origins (comma-separated)",
+      "type": "text",
+      "default": "http://localhost:3000"
+    },
+    {
+      "key": "cache_max_age",
+      "label": "REST Cache Max-Age (seconds)",
+      "type": "number",
+      "default": 300
+    },
+    {
+      "key": "disable_emojis",
+      "label": "Disable WP Emoji Scripts",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "disable_feeds",
+      "label": "Disable RSS/Atom Feeds",
+      "type": "boolean",
+      "default": true
+    }
+  ]
+}

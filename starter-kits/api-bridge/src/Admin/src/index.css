@@ -1,0 +1,23 @@
+/**
+ * The API Bridge Admin Styles
+ *
+ * Scoped under .api-bridge-admin-wrap to avoid conflicts with WP core styles.
+ * @wordpress/components provides its own styles via wp_enqueue_style in AdminInit.php.
+ */
+
+.api-bridge-admin-wrap {
+	max-width: 720px;
+	margin: 24px 0;
+}
+
+.api-bridge-admin-wrap h1 {
+	margin-bottom: 16px;
+}
+
+.api-bridge-admin-wrap .components-card {
+	margin-top: 16px;
+}
+
+.api-bridge-admin-wrap .components-button.is-primary {
+	margin-top: 8px;
+}

@@ -1,0 +1,40 @@
+{
+  "plugin": {
+    "name": "The React Admin",
+    "slug": "react-admin-dashboard",
+    "namespace": "ReactAdminDashboard",
+    "description": "A full-screen React dashboard inside WP Admin. Styled with Tailwind CSS. Feels nothing like WordPress.",
+    "version": "1.0.0",
+    "author": "Your Name",
+    "authorUri": "https://yoursite.com",
+    "pluginUri": "https://yoursite.com/react-admin-dashboard",
+    "textDomain": "react-admin-dashboard",
+    "minWpVersion": "6.0",
+    "minPhpVersion": "8.0"
+  },
+  "features": {
+    "settingsPage": true,
+    "restApi": true,
+    "adminMenu": true
+  },
+  "settings": [
+    {
+      "key": "dashboard_title",
+      "label": "Dashboard Title",
+      "type": "text",
+      "default": "My Dashboard"
+    },
+    {
+      "key": "primary_color",
+      "label": "Primary Color (Tailwind class, e.g. blue-600)",
+      "type": "text",
+      "default": "blue-600"
+    },
+    {
+      "key": "items_per_page",
+      "label": "Items Per Page",
+      "type": "number",
+      "default": 10
+    }
+  ]
+}
